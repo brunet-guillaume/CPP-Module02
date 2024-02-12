@@ -6,7 +6,7 @@
 /*   By: gbrunet <gbrunet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:40:48 by gbrunet           #+#    #+#             */
-/*   Updated: 2024/02/12 10:43:53 by gbrunet          ###   ########.fr       */
+/*   Updated: 2024/02/12 12:37:43 by gbrunet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,22 @@
 #include <cmath>
 
 Fixed::Fixed() {
-	std::cout << "Default constructor called" << std::endl;
 	this->setRawBits(0);
 }
 
 Fixed::Fixed(const Fixed &cpy) {
-	std::cout << "Copy constructor called" << std::endl;
 	*this = cpy;
 }
 
 Fixed::Fixed(const int int_val) {
-	std::cout << "Int constructor called" << std::endl;
 	this->setRawBits(int_val << this->partitional_bits);
 }
 
 Fixed::Fixed(const float float_val) {
-	std::cout << "Float constructor called" << std::endl;
 	this->setRawBits(roundf(float_val * (1 << this->partitional_bits)));
 }
 
 Fixed::~Fixed() {
-	std::cout << "Destructor called" << std::endl;
 }
 
 int	Fixed::getRawBits(void) const {
@@ -55,7 +50,6 @@ int	Fixed::toInt(void) const {
 }
 
 Fixed &Fixed::operator=(const Fixed &rhs) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	if (this == &rhs)
 		return (*this);
 	this->setRawBits(rhs.getRawBits());
@@ -67,46 +61,94 @@ std::ostream &operator<<(std::ostream &o, const Fixed &obj) {
 	return (o);
 }
 
-bool	Fixed::operator>(const Fixed &rhs) {
+bool	Fixed::operator>(const Fixed &rhs) const {
 	return (this->toFloat() > rhs.toFloat());
 }
 
-bool	Fixed::operator<(const Fixed &rhs) {
+bool	Fixed::operator<(const Fixed &rhs) const {
 	return (this->toFloat() < rhs.toFloat());
 }
 
-bool	Fixed::operator>=(const Fixed &rhs) {
+bool	Fixed::operator>=(const Fixed &rhs) const {
 	return (this->toFloat() >= rhs.toFloat());
 }
 
-bool	Fixed::operator<=(const Fixed &rhs) {
+bool	Fixed::operator<=(const Fixed &rhs) const {
 	return (this->toFloat() <= rhs.toFloat());
 }
 
-bool	Fixed::operator==(const Fixed &rhs) {
+bool	Fixed::operator==(const Fixed &rhs) const {
 	return (this->toFloat() == rhs.toFloat());
 }
 
-bool	Fixed::operator!=(const Fixed &rhs) {
+bool	Fixed::operator!=(const Fixed &rhs) const {
 	return (this->toFloat() != rhs.toFloat());
 }
 
-float	Fixed::operator+(const Fixed &rhs) {
+float	Fixed::operator+(const Fixed &rhs) const{
 	return (this->toFloat() + rhs.toFloat());
 }
 
-float	Fixed::operator-(const Fixed &rhs) {
+float	Fixed::operator-(const Fixed &rhs) const{
 	return (this->toFloat() - rhs.toFloat());
 }
 
-float	Fixed::operator*(const Fixed &rhs) {
+float	Fixed::operator*(const Fixed &rhs) const{
 	return (this->toFloat() * rhs.toFloat());
 }
 
-float	Fixed::operator/(const Fixed &rhs) {
+float	Fixed::operator/(const Fixed &rhs) const{
 	if (rhs.toFloat() == 0) {
-		std::cerr << "Unable to divide by 0" << std::endl << "0 returned" << std::endl;
+		std::cerr << std::endl << "Unable to divide by 0" << std::endl << "0 returned" << std::endl;
 		return (0);
 	}
 	return (this->toFloat() / rhs.toFloat());
+}
+
+Fixed	&Fixed::operator++() {
+	++fixed;
+	return (*this);
+}
+
+Fixed	Fixed::operator++(int) {
+	Fixed	old = *this;
+	
+	++fixed;
+	return (old);
+}
+
+Fixed	&Fixed::operator--() {
+	--fixed;
+	return (*this);
+}
+
+Fixed	Fixed::operator--(int) {
+	Fixed	old = *this;
+	
+	--fixed;
+	return (old);
+}
+
+Fixed	&Fixed::min(Fixed &a, Fixed &b) {
+	if (a.toFloat() > b.toFloat())
+		return (b);
+	return (a);
+}
+
+const Fixed	&Fixed::min(const Fixed &a, const Fixed &b) {
+	if (a.toFloat() > b.toFloat())
+		return (b);
+	return (a);
+}
+
+Fixed	&Fixed::max(Fixed &a, Fixed &b) {
+	if (a.toFloat() > b.toFloat())
+		return (a);
+	return (b);
+}
+
+const Fixed	&Fixed::max(const Fixed &a, const Fixed &b) {
+	if (a.toFloat() > b.toFloat())
+		return (a);
+	return (b);
 }
