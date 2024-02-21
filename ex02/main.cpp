@@ -6,7 +6,7 @@
 /*   By: gbrunet <gbrunet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:31:41 by gbrunet           #+#    #+#             */
-/*   Updated: 2024/02/12 12:35:43 by gbrunet          ###   ########.fr       */
+/*   Updated: 2024/02/21 09:25:06 by gbrunet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void) {
 	const Fixed	b(Fixed(5.05f) * Fixed(2));
 	const Fixed	c(Fixed(3.12f) - Fixed(-12));
 	Fixed		d(123.321f);
-
+	
 	std::cout << "\e[0;32mFixed a post/pre increment/decrement\e[0m" << std::endl;
 	std::cout << std::setw(28) << "a: " << std::setw(16) << a << std::endl;
 	std::cout << std::setw(28) << "++a: " << std::setw(16) << ++a << std::endl;
